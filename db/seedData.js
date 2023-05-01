@@ -1,15 +1,95 @@
 // require in the database adapter functions as you write them (createUser, createActivity...)
 // const { } = require('./');
-const client = require("./client")
+const client = require('./client');
+const {
+  createUser,
+  getUser,
+  getUserById,
+  getUserByUsername,
+  getRoutineActivityById,
+  addActivityToRoutine,
+  getRoutineActivitiesByRoutine,
+  updateRoutineActivity,
+  destroyRoutineActivity,
+  canEditRoutineActivity,
+  getAllActivities,
+  getActivityById,
+  getActivityByName,
+  attachActivitiesToRoutines,
+  createActivity,
+  updateActivity,
+  getRoutineById,
+  getRoutinesWithoutActivities,
+  getAllRoutines,
+  getAllPublicRoutines,
+  getAllRoutinesByUser,
+  getPublicRoutinesByUser,
+  getPublicRoutinesByActivity,
+  createRoutine,
+  updateRoutine,
+  destroyRoutine,
+}= require("./index")
+
+
+/*******DROP TABLES ********/
+
 
 async function dropTables() {
-  console.log("Dropping All Tables...")
-  // drop all tables, in the correct order
+  
+  try{
+    console.log("Dropping All Tables...")
+    await client.query(`
+    DROP TABLE IF EXISTS routine_activites;
+    DROP TABLE IF EXISTS activities;
+    DROP TABLE IF EXISTS routines;
+    DROP TABLE IF EXISTS users;
+    `)
+    console.log('tables dropped')
+  } catch (error) {
+    console.error('Issue dropping tables', error)
+    throw error;
+  }
+
 }
+
+/*******CREATE TABLES ********/
+
 
 async function createTables() {
   console.log("Starting to build tables...")
-  // create all tables, in the correct order
+  try{
+    await client.query(`
+    CREATE TABLE users(
+      id SERIAL PRIMARY KEY,
+      username VARCHAR(255) UNIQUE NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      active boolean DEFAULT true
+    );
+    CREATE TABLE routines(
+      id SERIAL PRIMARY KEY,
+      "creatorId" INTEGER REFERENCES users(id),
+      isPublic BOOLEAN DEFAULT true,
+      name VARCHAR(255) NOT NULL,
+      goal TEXT NOT NULL
+    );
+    CREATE TABLE activities(
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      content TEXT NOT NULL,
+      active BOOLEAN DEFAULT true
+      );
+      CREATE TABLE routines_activities(
+        id SERIAL PRIMARY KEY,
+        "routineId" INTEGER REFERENCES routines(id),
+        "activityId" INTEGER REFERENCES activities(id),
+        UNIQUE("routineId", "activityId")
+      )
+    `)
+        console.log("Finished creating tables!")
+  } catch (error){
+    console.error("Could not create tables error!")
+    throw error;
+  }
 }
 
 /* 
@@ -179,12 +259,12 @@ async function createInitialRoutineActivities() {
 
 async function rebuildDB() {
   try {
-    await dropTables()
-    await createTables()
-    await createInitialUsers()
-    await createInitialActivities()
-    await createInitialRoutines()
-    await createInitialRoutineActivities()
+    await dropTables();
+    await createTables();
+    await createInitialUsers();
+    await createInitialActivities();
+    await createInitialRoutines();
+    await createInitialRoutineActivities();
   } catch (error) {
     console.log("Error during rebuildDB")
     throw error
