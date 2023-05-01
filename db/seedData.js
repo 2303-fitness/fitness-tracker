@@ -35,6 +35,11 @@ const {
 
 
 async function dropTables() {
+
+  console.log("Dropping All Tables...")
+  // drop all tables, in the correct order
+  
+
   
   try{
     console.log("Dropping All Tables...")
@@ -49,6 +54,7 @@ async function dropTables() {
     console.error('Issue dropping tables', error)
     throw error;
   }
+
 
 }
 
