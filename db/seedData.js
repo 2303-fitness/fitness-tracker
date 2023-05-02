@@ -81,7 +81,7 @@ async function createTables() {
     CREATE TABLE activities(
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
-      content TEXT NOT NULL,
+      description TEXT NOT NULL,
       active BOOLEAN DEFAULT true
       );
       CREATE TABLE routines_activities(
