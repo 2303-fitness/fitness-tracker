@@ -14,17 +14,59 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
   }
 }
 
-async function getRoutineById(id) {}
+async function getRoutineById(id) {
+  try{
+    const { rows: [ routine ] } = await client.query(`
+    SELECT *
+    FROM routines
+    WHERE id=$1;
+    `, [id]);
+    return routine;
+  } catch (error) {
+    throw error;
+  }
+}
 
 async function getRoutinesWithoutActivities() {
   
 }
 
-async function getAllRoutines() {}
+async function getAllRoutines() {
+  try{
+    const { rows } = await client.query(
+      `SELECT *
+      FROM routines;
+      `);
+      return rows;
+  } catch (error) {
+    throw error;
+  }
+}
 
-async function getAllPublicRoutines() {}
+async function getAllPublicRoutines() {
+  try{
+    const { rows } = await client.query(
+      `SELECT *
+      FROM routines
+      WHERE isPublic = 'true';
+      `);
+      return rows;
+  } catch (error) {
+    throw error;
+  }
+}
 
-async function getAllRoutinesByUser({ username }) {}
+async function getAllRoutinesByUser({ username }) {
+  try{
+    const {rows} = await client.query(`
+    SELECT * FROM routines
+    WHERE username=${ username };
+    `);
+    return rows;
+} catch (error) {
+    throw error;
+}
+}
 
 async function getPublicRoutinesByUser({ username }) {}
 
