@@ -20,6 +20,9 @@ async function getRoutinesWithoutActivities() {
   
 }
 
+
+async function getAllRoutines() {}
+
 async function getAllRoutines() {
   try{
     const { rows: routines } = await client.query(
