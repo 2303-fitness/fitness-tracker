@@ -33,11 +33,13 @@ async function getRoutinesWithoutActivities() {
 
 async function getAllRoutines() {
   try{
-    const { rows } = await client.query(
-      `SELECT *
-      FROM routines;
+    const { rows: routines } = await client.query(
+      `SELECT routines.*,
+      users.username AS "creatorName",
+      FROM routines,
+      JOIN users ON routines."creatorId" = users.id
       `);
-      return rows;
+      return await attachActivitiesToRoutines(routines);
   } catch (error) {
     throw error;
   }

@@ -28,7 +28,7 @@ const {
   createRoutine,
   updateRoutine,
   destroyRoutine,
-}= require("./index")
+} = require("./index")
 
 
 /*******DROP TABLES ********/
@@ -38,17 +38,17 @@ async function dropTables() {
 
   console.log("Dropping All Tables...")
   // drop all tables, in the correct order
-  
 
-  
-  try{
+
+
+  try {
     console.log("Dropping All Tables...")
     await client.query(`
-    DROP TABLE IF EXISTS routine_activites;
-    DROP TABLE IF EXISTS activities;
-    DROP TABLE IF EXISTS routines;
-    DROP TABLE IF EXISTS users;
-    `)
+    DROP TABLE IF EXISTS routine_activities cascade;
+    DROP TABLE IF EXISTS activities cascade;
+    DROP TABLE IF EXISTS routines cascade;
+    DROP TABLE IF EXISTS users cascade;
+    `);
     console.log('tables dropped')
   } catch (error) {
     console.error('Issue dropping tables', error)
@@ -63,36 +63,36 @@ async function dropTables() {
 
 async function createTables() {
   console.log("Starting to build tables...")
-  try{
+  try {
     await client.query(`
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
       active boolean DEFAULT true
-    );
-    CREATE TABLE routines(
-      id SERIAL PRIMARY KEY,
-      "creatorId" INTEGER REFERENCES users(id),
-      isPublic BOOLEAN DEFAULT true,
-      name VARCHAR(255) NOT NULL,
-      goal TEXT NOT NULL
-    );
-    CREATE TABLE activities(
-      id SERIAL PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      description TEXT NOT NULL,
-      active BOOLEAN DEFAULT true
       );
-      CREATE TABLE routines_activities(
+      CREATE TABLE routines(
         id SERIAL PRIMARY KEY,
-        "routineId" INTEGER REFERENCES routines(id),
-        "activityId" INTEGER REFERENCES activities(id),
-        UNIQUE("routineId", "activityId")
-      )
+        "creatorId" INTEGER REFERENCES users(id),
+        isPublic BOOLEAN DEFAULT true,
+        name VARCHAR(255) NOT NULL,
+        goal TEXT NOT NULL
+        );
+      CREATE TABLE activities(
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          description TEXT NOT NULL,
+          active BOOLEAN DEFAULT true
+          );
+      CREATE TABLE routine_activities(
+            id SERIAL PRIMARY KEY,
+            "routineId" INTEGER REFERENCES routines(id),
+            "activityId" INTEGER REFERENCES activities(id),
+            UNIQUE("routineId", "activityId")
+          );
     `)
-        console.log("Finished creating tables!")
-  } catch (error){
+    console.log("Finished creating tables!")
+  } catch (error) {
     console.error("Could not create tables error!")
     throw error;
   }
