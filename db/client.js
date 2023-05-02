@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 
-const connectionString = 'https://localhost:5432/fitness-tracker';
+const connectionString = 'https://localhost:5432/fitness-dev';
 
 const client = new Pool({
   connectionString,
