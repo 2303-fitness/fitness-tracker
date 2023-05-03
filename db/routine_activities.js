@@ -8,27 +8,28 @@ async function addActivityToRoutine({
 }) { 
   try {
 
+    console.log("BLAH BLAH BLAH BLAH BLAH");
    
   const {rows: [routineActivities]} = await client.query(`
-  INSERT INTO routine_activities (routineId, activityId, count, duration)
+  INSERT INTO routine_activities ("routineId", "activityId", count, duration)
   VALUES ($1, $2, $3, $4)
   RETURNING *;
   `, [routineId, activityId, count, duration]);
-  
   return routineActivities;
 } catch (error) {
+  console.error("error addActivityToRoutine", error)
   throw error;
 }}
 
 async function getRoutineActivityById(id) {
   try {
-    const { rows: [ routine ]  } = await client.query(`
+    const { rows: [ routineActivity ]  } = await client.query(`
       SELECT *
-      FROM routines
+      FROM routine_activities
       WHERE id=$1;
     `, [id]);
 
-    if (!routine) {
+    if (!routineActivity) {
       throw {
         name: "RoutineActivity not found",
         message: "Could not find an activity with that Id"

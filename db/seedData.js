@@ -74,7 +74,7 @@ async function createTables() {
       CREATE TABLE routines(
         id SERIAL PRIMARY KEY,
         "creatorId" INTEGER REFERENCES users(id),
-        isPublic BOOLEAN DEFAULT true,
+        "isPublic" BOOLEAN DEFAULT true,
         name VARCHAR(255) NOT NULL,
         goal TEXT NOT NULL
         );
