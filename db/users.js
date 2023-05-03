@@ -21,18 +21,23 @@ async function createUser({ username, password }) {
 
 async function getUser({ username, password }) {
   try {
-    const { rows } = await client.query(`
+    const { rows: [user] } = await client.query(`
     SELECT *
     FROM users
-    WHERE username=${ username }
-    AND password=${ password }`)
+    WHERE username= $1
+    `, [username]);
+    
+    if (user.password !== password) {
+      return;
+    } 
+    delete user.password
+    return user;
   
-
-  return rows;
 } catch (error) {
   throw error;
 }
 }
+
 
 async function getUserById(userId) {
 try {

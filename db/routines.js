@@ -21,7 +21,7 @@ async function getRoutinesWithoutActivities() {
 }
 
 
-async function getAllRoutines() {}
+
 
 async function getAllRoutines() {
   try{
