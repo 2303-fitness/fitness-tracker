@@ -18,7 +18,7 @@ async function addActivityToRoutine({
   return routineActivities;
 } catch (error) {
   throw error;
-
+}}
 
 
 async function getRoutineActivityById(id) {
