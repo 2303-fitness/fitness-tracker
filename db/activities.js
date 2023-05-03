@@ -43,6 +43,16 @@ async function getActivityById(id) {
 }
 
 async function getActivityByName(name) {
+  try{
+    const { rows: [ activity ] } = await client.query(`
+    SELECT *
+    FROM activities
+    WHERE name=$1;
+    `, [name]);
+    return activity;
+  } catch (error) {
+    throw error;
+  }
 }
 
 // used as a helper inside db/routines.js
@@ -50,18 +60,21 @@ async function attachActivitiesToRoutines(routines) {}
 
 async function updateActivity({ id, name, description, fields }) {
 
-    const setString = Object.keys(fields).map((key, index) => `"${ key }"=$${ index + 1 }`).join(', ');
-
+    const setString = Object.keys(fields).map((key, index) => `"${ key }"=$${ index +1 }`).join(', ');
+    
+    if(setString.length > 0){
+      return;
+    }
   try{
-    if(setString.length > 0) {
-      await client.query(`
+     
+      const { rows: [ activity ] } = await client.query(`
       UPDATE activities
       SET ${ setString }
-      WHERE  name=${ name } AND description=${ description}
+      WHERE  id=${id}
       RETURNING *;
-      `, Object.values(fields));
+      `,Object.values(fields));
       return await getActivityById(id);
-    }
+    
   } catch (error){
     throw error;
   }
