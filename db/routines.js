@@ -37,7 +37,6 @@ async function getAllRoutines() {
   }
 }
 
-
 async function getAllPublicRoutines() {}
 
 async function getAllRoutinesByUser({ username }) {}
