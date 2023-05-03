@@ -20,7 +20,6 @@ async function addActivityToRoutine({
   throw error;
 }}
 
-
 async function getRoutineActivityById(id) {
   try {
     const { rows: [ routine ]  } = await client.query(`
