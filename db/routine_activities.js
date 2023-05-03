@@ -8,7 +8,6 @@ async function addActivityToRoutine({
 }) { 
   try {
 
-    console.log("BLAH BLAH BLAH BLAH BLAH");
    
   const {rows: [routineActivities]} = await client.query(`
   INSERT INTO routine_activities ("routineId", "activityId", count, duration)
