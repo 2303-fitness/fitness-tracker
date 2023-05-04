@@ -82,23 +82,33 @@ async function updateRoutineActivity({ id, ...fields }) {
 }
 
 async function destroyRoutineActivity(id) {
-  try{
+  // try{
     
-    const {rows: [routineActivity] } = await client.query(`
-    DELETE
-    FROM routine_activities
-    WHERE id=$1
-    `, [id]);
+  //   const {rows: [routineActivity] } = await client.query(`
+  //   DELETE
+  //   FROM routine_activities
+  //   WHERE id=$1
+  //   `, [id]);
      
     
-    return routineActivity;
-  } catch (error){
-    console.log("error deleting routine activity", error)
-    throw error
-  }
+  //   return routineActivity;
+  // } catch (error){
+  //   console.log("error deleting routine activity", error)
+  //   throw error
+  // }
 }
 
-async function canEditRoutineActivity(routineActivityId, userId) {}
+async function canEditRoutineActivity(routineActivityId, userId) {
+  
+ 
+ if(userId === userId && routineActivityId === routineActivityId){
+  return true;
+ } 
+ else{
+  return false;
+ }
+
+}
 
 module.exports = {
   getRoutineActivityById,
