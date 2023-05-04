@@ -129,22 +129,28 @@ async function getPublicRoutinesByUser({ username }) {
 async function getPublicRoutinesByActivity({ id }) {
   try {
     const { rows: routines } = await client.query(`
-    SELECT DISTINCT ON (routines.id)
-    routines.*, users.username AS "creatorName", routine_activities.duration,
-    routine_activities.count, routine_activities.id AS "routineActivityId"
-  FROM routines
-  JOIN users ON users.id = routines."creatorId"
-  JOIN routine_activities ON routine_activities."routineId" = routines.id
-  WHERE routines."isPublic" = true
-    `);
-
+      SELECT DISTINCT ON (routines.id)
+        routines.*, users.username AS "creatorName", routine_activities.duration,
+        routine_activities.count, routine_activities.id AS "routineActivityId"
+      FROM routines
+      JOIN users ON users.id = routines."creatorId"
+      JOIN routine_activities ON routine_activities."routineId" = routines.id
+      WHERE routines."isPublic" = true
+      AND routines.id IN (
+        SELECT routine_activities."routineId"
+        FROM routine_activities
+        WHERE routine_activities."activityId" = $1
+      )
+    GROUP BY routines.id, users.username, routine_activities.duration, 
+    routine_activities.count, routine_activities.id
+  `, [id]);
 
     return await attachActivitiesToRoutines(routines);
   } catch (error) {
     console.error("Error getting public routines", error);
     throw error;
   }
-}
+};
 
 async function updateRoutine({ id, ...fields }) {
   const setString = Object.keys(fields).map(
@@ -170,18 +176,25 @@ async function updateRoutine({ id, ...fields }) {
 }
 
 async function destroyRoutine(id) {
-  try{
-    const {rows: [routine] } = await client.query(`
-    DELETE
-    FROM routines
-    WHERE id=$1
+  try {
+    // Delete routine_activities
+    await client.query(`
+      DELETE FROM routine_activities
+      WHERE "routineId" = $1
     `, [id]);
-   
+
+    // Delete routine
+    const { rows: [routine] } = await client.query(`
+      DELETE FROM routines
+      WHERE id = $1
+      RETURNING *
+    `, [id]);
+
     return routine;
-  } catch (error){
-    throw error
+  } catch (error) {
+    throw error;
   }
-}
+};
 
 module.exports = {
   getRoutineById,
