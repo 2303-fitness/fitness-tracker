@@ -98,17 +98,21 @@ async function destroyRoutineActivity(id) {
   // }
 }
 
-async function canEditRoutineActivity(routineActivityId, userId) {
-  
- 
- if(userId === userId && routineActivityId === routineActivityId){
-  return true;
- } 
- else{
-  return false;
- }
 
-}
+  
+  async function canEditRoutineActivity(routineActivityId, userId) {
+    try {
+      const { rows: [routineActivity] } = await client.query(
+        `SELECT "creatorId"
+        FROM routine_activities
+        WHERE routineActivityId = $1;
+      `, [routineActivityId]);
+      return routineActivity.userId === userId;
+    } catch (error) {
+      console.error('Error occurred:', error);
+      throw error;
+    }
+  }
 
 module.exports = {
   getRoutineActivityById,
