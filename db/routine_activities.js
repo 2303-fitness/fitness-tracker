@@ -1,4 +1,6 @@
 const client = require("./client");
+const  { getRoutinesWithoutActivities, getPublicRoutinesByActivity }  = require("./routines");
+
 
 async function addActivityToRoutine({
   routineId,
@@ -41,21 +43,17 @@ async function getRoutineActivityById(id) {
 
 async function getRoutineActivitiesByRoutine({ id }) {
   try {
-    const { rows: { routineActivity }  } = await client.query(`
+    const { rows: routineActivities } = await client.query(`
       SELECT *
       FROM routine_activities
-      WHERE id=$1;
+      WHERE "routineId" = $1;
     `, [id]);
 
-    if (routineId !== routine.id) {
-      throw {
-        name: "RoutineActivity not found",
-        message: "Could not find an activity with that Routine Id"
-      };
-    } return routineActivity;
-} catch (error) {
-  throw error;
-}
+    return routineActivities;
+  } catch (error) {
+    console.error("Error occurred:", error);
+    throw error;
+  }
 }
 
 async function updateRoutineActivity({ id, ...fields }) {
@@ -103,11 +101,16 @@ async function destroyRoutineActivity(id) {
 async function canEditRoutineActivity(routineActivityId, userId) {
   try {
     const { rows: [routineActivity] } = await client.query(
-      `SELECT "creatorId"
+      `SELECT *
        FROM routine_activities
-       WHERE id = $1;
+       JOIN routines ON routine_activities."routineId" = routines.id
+       AND routine_activities.id = $1;
+      
       `, [routineActivityId]);
+
     return routineActivity.creatorId === userId;
+
+    
   } catch (error) {
     console.error('Error occurred:', error);
     throw error;
