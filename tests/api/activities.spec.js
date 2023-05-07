@@ -26,7 +26,7 @@ const { getPublicRoutinesByActivity } = require("../../db");
 
 describe("/api/activities", () => {
   describe("GET /api/activities", () => {
-    xit("Just returns a list of all activities in the database", async () => {
+    it("Just returns a list of all activities in the database", async () => {
       // Create a fake activity to watch for
       const fakeActivity = await createFakeActivity(
         "Running",
@@ -154,7 +154,7 @@ describe("/api/activities", () => {
   });
 
   describe("GET /api/activities/:activityId/routines", () => {
-    xit("Get a list of all public routines which feature that activity", async () => {
+    it("Get a list of all public routines which feature that activity", async () => {
       const { fakeRoutines } = await createFakeUserWithRoutines("Allen");
       const fakeActivity = await createFakeActivity(
         "Weight Lifting",

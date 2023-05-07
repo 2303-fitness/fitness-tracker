@@ -48,14 +48,15 @@ async function getRoutineActivitiesByRoutine({ id }) {
       FROM routine_activities
       WHERE "routineId" = $1;
     `, [id]);
-
+console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA",routineActivities);
     return routineActivities;
+  
   } catch (error) {
     console.error("Error occurred:", error);
     throw error;
   }
 }
-
+  
 async function updateRoutineActivity({ id, ...fields }) {
   const setString = Object.keys(fields).map(
     (key, index) => `"${ key }"=$${ index + 1 }`
