@@ -2,8 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 // GET /api/health
-router.get('/health', async (req, res, next) => {
+router.get('/health', (req, res, next) => {
+    res.status(200).send({
+        message: 'ok'
+    });
 });
+
+// const requireUser = require('./utils');
+// router.use('/utils', requireUser);
 
 // ROUTER: /api/users
 const usersRouter = require('./users');

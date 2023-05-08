@@ -55,6 +55,7 @@ async function getAllRoutines() {
     `);
 
     return await attachActivitiesToRoutines(routines);
+    console.log("WWWWWWWWWWWWWWWWW", routines)
   } catch (error) {
     throw error;
   }
@@ -99,30 +100,30 @@ async function getAllRoutinesByUser({ username }) {
 
 async function getPublicRoutinesByUser({ username }) {
   try {
-  //   const { rows: routines } = await client.query(`
-  //   SELECT DISTINCT ON (routines.id)
-  //   routines.*, users.username AS "creatorName"
-  // FROM routines
-  // JOIN users ON users.id = routines."creatorId"
-  // JOIN routine_activities ON routine_activities."routineId" = routines.id
-  // WHERE routines."isPublic" = true, 
-  //   `);
-
-
-  //   return await attachActivitiesToRoutines(routines);
-
-  const user = await getUserByUsername(username);
     const { rows: routines } = await client.query(`
-    SELECT routines.*, users.username AS "creatorName"
-    FROM routines
-    JOIN users ON routines."creatorId" = users.id 
-    WHERE "creatorId" = $1
-    AND "isPublic" = true
-    `, [user.id]);
-    return attachActivitiesToRoutines(routines);
-  } catch (error) {
-    console.error("Error getting public routines", error);
-    throw error;
+    SELECT DISTINCT ON (routines.id)
+    routines.*, users.username AS "creatorName"
+  FROM routines
+  JOIN users ON users.id = routines."creatorId"
+  JOIN routine_activities ON routine_activities."routineId" = routines.id
+  WHERE routines."isPublic" = true, 
+    `);
+
+
+    return await attachActivitiesToRoutines(routines);
+
+  // const user = await getUserByUsername(username);
+  //   const { rows: routines } = await client.query(`
+  //   SELECT routines.*, users.username AS "creatorName"
+  //   FROM routines
+  //   JOIN users ON routines."creatorId" = users.id 
+  //   WHERE "creatorId" = $1
+  //   AND "isPublic" = true
+  //   `, [user.id]);
+  //   return attachActivitiesToRoutines(routines);
+ } catch (error) {
+   console.error("Error getting public routines", error);
+   throw error;
   }
 }
 
