@@ -8,47 +8,52 @@ const { getAllRoutinesByUser } = require('../db');
 const { getPublicRoutinesByUser } = require('../db');
 const { getUserByUsername } = require('../db');
 const { createUser } = require('../db');
-const { UserTakenError} = require('../errors.js')
+const { UserTakenError} = require('../errors.js');
+const { PasswordTooShortError } = require('../errors.js')
 
 
 
 
 
 usersRouter.post('/register', async (req, res, next) => {
-    const { username, password } = req.body;
-    try {
-        const _user = await getUserByUsername(username);
+  const { username, password } = req.body;
+  try {
+    const _user = await getUserByUsername(username);
     console.log("HHHHHHHHHHHH", _user);
-        if (_user) {
-          res.send({
-            error:"error registering user",
-            message: UserTakenError(username),
-            name: 'UserExistsError',
-           
-          });
-        }
+    if (_user) {
+      res.send({
+        error:"error registering user",
+        message: UserTakenError(username),
+        name: 'UserExistsError',
+      });
+    } else if (password.length < 8) {
+      return res.status(400).json({
+       error: "Password needs to be 8 characters long!",
+        message: PasswordTooShortError(),
+        name: "Password too short!"
+      });
+    } else {
+      const user = await createUser({
+        username,
+        password
+      });
 
-    
-        const user = await createUser({
-          username,
-          password
-        });
+      const token = jwt.sign({ 
+        id: user.id, 
+        username
+      }, process.env.JWT_SECRET, {
+        expiresIn: '1w'
+      });
 
-        const token = jwt.sign({ 
-          id: user.id, 
-          username
-        }, process.env.JWT_SECRET, {
-          expiresIn: '1w'
-        });
-
-        res.send({ 
-            message: "thank you for signing up",
-            token,
-            user
-          });
-        } catch (error) {
-          next(error)
-        } 
+      res.send({ 
+        message: "thank you for signing up",
+        token,
+        user
+      });
+    }
+  } catch (error) {
+    next(error)
+  } 
 });
 // POST /api/users/login
 usersRouter.post('/login', async (req, res, next) => {

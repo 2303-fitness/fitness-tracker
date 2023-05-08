@@ -80,7 +80,8 @@ routinesRouter.patch('/:routineId', async (req, res, next) => {
   }
 });
 // DELETE /api/routines/:routineId
-routinesRouter.delete('/:routineId',  async (req, res, next) => {
+
+routinesRouter.delete('/:routineId', async (req, res, next) => {
   try {
     const routine = await getRoutineById(req.params.routineId);
 

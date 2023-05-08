@@ -49,7 +49,9 @@ activitiesRouter.post('/', async (req, res, next) => {
     });
 
 // PATCH /api/activities/:activityId
-activitiesRouter.patch('/:activityId',  async (req, res, next) => {
+
+activitiesRouter.patch('/:activityId', async (req, res, next) => {
+
   const { activityId } = req.params;
   const { count, duration } = req.body;
 
