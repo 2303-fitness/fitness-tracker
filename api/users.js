@@ -2,6 +2,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const express = require("express");
+const {requireUser} = require("./utils");
 const usersRouter = express.Router();
 const { getAllRoutinesByUser } = require('../db');
 const { getPublicRoutinesByUser } = require('../db');

@@ -5,6 +5,7 @@ const { updateRoutineActivity } = require('../db');
 const {getRoutineActivitiesByRoutine} = require('../db');
 const {getAllRoutinesByUser} = require('../db');
 const {getActivityById} = require('../db');
+const {requireUser} = require("./utils");
 
 // PATCH /api/routine_activities/:routineActivityId
 routineActivitiesRouter.patch('/:routineActivityId',  async (req, res, next) => {
