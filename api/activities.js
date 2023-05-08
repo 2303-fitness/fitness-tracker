@@ -1,6 +1,7 @@
 const express = require('express');
 const activitiesRouter = express.Router();
-const {UnauthorizedError} = require('../errors.js')
+const {UnauthorizedUpdateError} = require('../errors.js')
+const {UnauthorizedDeleteError} = require('../errors.js')
 const {ActivityExistsError} = require('../errors.js')
 const { createActivity} = require("../db");
 const {  getAllActivities} = require("../db");
@@ -46,7 +47,38 @@ activitiesRouter.post('/', async (req, res, next) => {
     });
 
 // PATCH /api/activities/:activityId
+activitiesRouter.patch('/:activityId', requireUser, async (req, res, next) => {
+  const { activityId } = req.params;
+  const { count, duration } = req.body;
 
+  const updateFields = {};
+
+
+  if (count) {
+    updateFields.count = count;
+  }
+
+  if (duration) {
+    updateFields.duration = duration;
+  }
+
+  try {
+    const originalActivity = await getActivityByIs(activityId);
+
+    if (originalActivity.creatorId === req.user.id) {
+      const updatedActivity= await updateRoutine(activityId, updateFields);
+      res.send({ activity: updatedActivity })
+    } else {
+      next({
+        error: "Cannot Update this routine",
+        name: 'UnauthorizedUserError',
+        message: UnauthorizedUpdateError()
+      })
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 // GET /api/activities/:activityId/routines
 activitiesRouter.get('/:activityId/routines',  async (req, res)=>{
     const routinesList = await   getPublicRoutinesByActivity();
