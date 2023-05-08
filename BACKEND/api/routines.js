@@ -19,35 +19,26 @@ routinesRouter.get('/',  async (req, res)=>{
 });
  
 //POST /api/routines
-routinesRouter.post('/', async (req, res, next) => {
-const { goal, name} = req.body;
-routineData = {};
-try { 
-    routineData.goal = goal
-    routineData.name = name
-    routineData.creatorId = req.user.id
+routinesRouter.post('/', requireUser, async (req, res, next) => {
+  const { goal, name } = req.body;
+  const routineData = {
+    goal,
+    name,
+    creatorId: req.user.id
+  };
+  try {
     const routine = await createRoutine(routineData);
-//     if (!user) { 
-//          res.send({ 
-//       error: "Cannot Create Routine" ,
-//       message: UnauthorizedError(user),
-//       name: 'NoRoutine', 
-     
-//     });
-//   }
-if(routineData) 
     res.send({
       routine
-    }); 
-        
-   
-   
+    });
   } catch (error) {
     next(error);
   }
 });
+
+
 // PATCH /api/routines/:routineId
-routinesRouter.patch('/:routineId', async (req, res, next) => {
+routinesRouter.patch('/:routineId', requireUser, async (req, res, next) => {
   const { routineId } = req.params;
   const { name, goal } = req.body;
 
