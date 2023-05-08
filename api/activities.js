@@ -6,6 +6,8 @@ const {ActivityExistsError} = require('../errors.js')
 const { createActivity} = require("../db");
 const {  getAllActivities} = require("../db");
 const {  getPublicRoutinesByActivity} = require("../db");
+const { getActivityByName} = require("../db");
+const {requireUser} = require("./utils");
 
 // GET /api/activities
 activitiesRouter.get('/',  async (req, res)=>{
@@ -24,7 +26,7 @@ activitiesRouter.post('/', async (req, res, next) => {
         activityData.description =description
         activityData.name = name
     
-    // const activities = await getActivityByName(name);
+    const activity = await getActivityByName(name);
         /*both halves of this work but I cant fingure out how they work in tandem
         if you swap then the checks will switch.  believe it has to do with the line i commented out 26, im almost positive we nees to use that but cant get it running right*/
          if (name) { 
@@ -47,7 +49,7 @@ activitiesRouter.post('/', async (req, res, next) => {
     });
 
 // PATCH /api/activities/:activityId
-activitiesRouter.patch('/:activityId', requireUser, async (req, res, next) => {
+activitiesRouter.patch('/:activityId',  async (req, res, next) => {
   const { activityId } = req.params;
   const { count, duration } = req.body;
 

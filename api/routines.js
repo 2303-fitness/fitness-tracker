@@ -7,6 +7,7 @@ const {UnauthorizedUpdateError} = require('../errors.js')
 const { UnauthorizedDeleteError} = require('../errors.js')
 const { createRoutine } = require("../db");
 const {  getAllRoutines} = require("../db");
+const {requireUser} = require("./utils");
 
 // GET /api/routines
 routinesRouter.get('/',  async (req, res)=>{
@@ -46,7 +47,7 @@ if(routineData)
   }
 });
 // PATCH /api/routines/:routineId
-routinesRouter.patch('/:routineId', requireUser, async (req, res, next) => {
+routinesRouter.patch('/:routineId', async (req, res, next) => {
   const { routineId } = req.params;
   const { name, goal } = req.body;
 
@@ -79,7 +80,7 @@ routinesRouter.patch('/:routineId', requireUser, async (req, res, next) => {
   }
 });
 // DELETE /api/routines/:routineId
-routinesRouter.delete('/:routineId', requireUser, async (req, res, next) => {
+routinesRouter.delete('/:routineId',  async (req, res, next) => {
   try {
     const routine = await getRoutineById(req.params.routineId);
 
