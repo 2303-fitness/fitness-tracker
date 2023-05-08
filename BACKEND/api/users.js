@@ -9,7 +9,8 @@ const { getPublicRoutinesByUser } = require('../db');
 const { getUserByUsername } = require('../db');
 const { createUser } = require('../db');
 const { UserTakenError} = require('../errors.js');
-const { PasswordTooShortError } = require('../errors.js')
+const { PasswordTooShortError } = require('../errors.js');
+const { getUser } = require('../db');
 
 
 
@@ -85,6 +86,12 @@ usersRouter.post('/login', async (req, res, next) => {
     }
 });
 // GET /api/users/me
+usersRouter.get('/',requireUser, async (req, res) => {
+  const users = await getUser();
+  res.send({
+    users
+  });
+});
 
 // GET /api/users/:username/routines
 
