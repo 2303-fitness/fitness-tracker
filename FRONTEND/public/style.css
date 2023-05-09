@@ -1,0 +1,45 @@
+
+body {
+   
+    height: 100vh;
+    width: 100vw;
+    margin: 10px;
+  }
+
+  #main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    font-family: 'Raleway', Arial, sans-serif;
+  }
+
+  label {
+    text-align: right;
+    clear: both;
+    float:left;
+    margin-right:15px;
+}
+
+
+#edit-routine-form,#add-routine-form, #edit-activities-form, #add-activities-form, #edit-routine-activities-form, #add-routine-activities-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  font-size: x-large;
+  border: 2px solid teal;
+}
+.routines, .activities, .routine-activities{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 10px;
+}
+.user-post-preview{
+  display: flex;
+  border: 15px black;
+  flex-direction: column;
+  padding: 15px;
+  margin: 5px;
+}
