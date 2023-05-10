@@ -20,7 +20,7 @@ import {
   RegisterUser,
   Routines,
   Activities,
-} from ".";
+} from "./Index";
 
 const Main = () => {
   const [currentUser, setCurrentUser] = useState("");
@@ -78,32 +78,7 @@ const Main = () => {
           path="/home"
           element={<Home isLoggedIn={isLoggedIn} currentUser={currentUser} />}
         />
-        <Route
-          path="/registerUser"
-          element={
-            <RegisterUser
-              currentUser={currentUser}
-              setCurrentUser={setCurrentUser}
-              isLoggedIn={isLoggedIn}
-              setIsLoggedIn={setIsLoggedIn}
-              token={token}
-              setToken={setToken}
-            />
-          }
-        />
-        <Route
-          path="/loginPage"
-          element={
-            <LoginPage
-              currentUser={currentUser}
-              setCurrentUser={setCurrentUser}
-              isLoggedIn={isLoggedIn}
-              setIsLoggedIn={setIsLoggedIn}
-              token={token}
-              setToken={setToken}
-            />
-          }
-        />
+
         <Route
           path="/routines"
           element={
