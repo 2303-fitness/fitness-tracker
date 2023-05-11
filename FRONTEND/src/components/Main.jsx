@@ -23,7 +23,7 @@ import {
 } from "./Index";
 
 const Main = () => {
-  const [currentUser, setCurrentUser] = useState("");
+  const [currentUser, setCurrentUser] = useState('');
   const [currentActivity, setCurrentActivity] = useState([]);
   const [currentRoutine, setCurrentRoutine] = useState({});
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -36,10 +36,10 @@ const Main = () => {
   useEffect(() => {
     const getInitialData = async () => {
       try {
-        const fetchedRoutines = await getAllRoutines();
+        const fetchedRoutines = await getAllRoutines();  setRoutinesList(fetchedRoutines);
         const fetchedActivities = await getAllActivities();
         setActivitiesList(fetchedActivities);
-        setRoutinesList(fetchedRoutines);
+      
         if (token) {
           setIsLoggedIn(true);
         }
@@ -66,7 +66,7 @@ const Main = () => {
   }, [token]);
 
   return (
-    <>
+    <div id="main">
       <Header
         setCurrentUser={setCurrentUser}
         setIsLoggedIn={setIsLoggedIn}
@@ -75,12 +75,37 @@ const Main = () => {
       />
       <Routes>
         <Route
-          path="/home"
+          path="/Home"
           element={<Home isLoggedIn={isLoggedIn} currentUser={currentUser} />}
         />
-
+     <Route
+          path="/RegisterUser"
+          element={
+            <RegisterUser
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              token={token}
+              setToken={setToken}
+            />
+          }
+        />
         <Route
-          path="/routines"
+          path="/loginPage"
+          element={
+            <LoginPage
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              token={token}
+              setToken={setToken}
+            />
+          }
+        />
+        <Route
+          path="/Routines"
           element={
             <Routines
               routinesList={routinesList}
@@ -93,7 +118,7 @@ const Main = () => {
           }
         />
         <Route
-          path="/activities"
+          path="/Activities"
           element={
             <Activities
               activitiesList={activitiesList}
@@ -107,7 +132,7 @@ const Main = () => {
           }
         />
         <Route
-          path="/singleRoutineView"
+          path="/SingleRoutineView"
           element={
             <SingleRoutineView
               activitiesList={activitiesList}
@@ -128,7 +153,7 @@ const Main = () => {
         />
 
         <Route
-          path="/profile"
+          path="/Profile"
           element={
             <Profile
               routinesList={routinesList}
@@ -149,7 +174,7 @@ const Main = () => {
           }
         />
       </Routes>
-    </>
+    </div>
   );
 };
 

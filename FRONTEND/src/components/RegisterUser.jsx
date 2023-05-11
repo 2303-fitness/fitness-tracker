@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { NavLink, useNavigate } from 'react-router-dom';
 import { registerUser } from "../api";
 
-const register = ({
-  user,
-  setUser,
+const RegisterUser = ({
+  currentUser,
+  setCurrentUser,
   isLoggedIn,
   setIsLoggedIn,
   token,
@@ -11,30 +12,28 @@ const register = ({
 }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const userToRegister = { user: { username: username, password: password } };
     const data = await registerUser(userToRegister);
-    console.log(data.token);
+    
     if (data.token) {
       setToken(data.token);
-      setUser(username);
+      setCurrentUser(username);
       setIsLoggedIn(true);
     }
     setUsername("");
     setPassword("");
+    navigate('/Home');
   };
 
   return (
     <>
       <section id="mainContainer">
-        <div className="openBtn">
-          <button className="openButton" onClick={() => openForm()}>
-            <strong>Open Form</strong>
-          </button>
-        </div>
         <div className="login-signup-Popup">
           <div className="formPopup" id="popupForm">
             <form onSubmit={handleSubmit} className="formContainer">
@@ -54,7 +53,7 @@ const register = ({
                 <strong>Password</strong>
               </label>
               <input
-                type="password"
+                type="text"
                 id="psw"
                 placeholder="Password"
                 value={password}
@@ -62,31 +61,14 @@ const register = ({
                 required
               />
               <button type="submit" className="btn">
-                Log in
-              </button>
-              <button
-                type="button"
-                className="btn cancel"
-                onClick={() => closeForm()}
-              >
-                Close
+                Sign Up
               </button>
             </form>
           </div>
         </div>
-        <script>
-          {`
-             function openForm() {
-                document.createElementById("popupForm").style.display = "block";
-              }
-          function closeForm() {
-            document.createElementById("popupForm").style.display = "none";
-          }
-        `}
-        </script>
       </section>
     </>
   );
 };
 
-export default register;
+export default RegisterUser;

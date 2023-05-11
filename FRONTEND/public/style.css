@@ -3,14 +3,13 @@ body {
    
     height: 100vh;
     width: 100vw;
-    margin: 10px;
+    margin: 0px;
   }
 
   #main {
     height: 100%;
     display: flex;
     flex-direction: column;
-    
     font-family: 'Raleway', Arial, sans-serif;
   }
 
@@ -29,6 +28,14 @@ body {
   align-items:center;
   font-size: x-large;
   border: 2px solid teal;
+}
+#welcome{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  padding: 20px;
+  margin: auto;
 }
 .routines, .activities, .routine-activities{
   display: flex;
@@ -50,8 +57,6 @@ body {
   background-color: #212121;
   color: #fff;
   padding: 10px 20px;
-  margin: auto;
-  margin-top: 0;
 }
 
 .headerElem div:first-child {
@@ -67,6 +72,8 @@ body {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  background-color: #8ebf42;
+  color: #fff;
 }
 
 .headerElem div:last-child button:hover {
@@ -76,12 +83,12 @@ body {
 
 #navBar {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   margin-top: 20px;
 }
 
 #navBar a {
-  margin: 0 15px;
+  margin: 5px;
   color: #fff;
   font-size: 18px;
   font-weight: bold;
@@ -91,4 +98,53 @@ body {
 
 #navBar a:hover {
   color: #03a9f4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.mainContainer {
+  display: flex;
+  flex-grow: 2;
+  justify-content: center;
+}
+
+.formContainer {
+  max-width: 300px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.formContainer input[type="text"],
+.formContainer input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 20px 0;
+  border: none;
+  background: #eee;
+  border-radius: 5px;
+}
+
+.formContainer input[type="text"]:focus,
+.formContainer input[type="password"]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.formContainer .btn {
+  padding: 12px 20px;
+  border: none;
+  background-color: #8ebf42;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 15px;
+  opacity: 0.8;
+  border-radius: 5px;
+  transition: opacity 0.3s ease;
+}
+
+.formContainer .btn:hover {
+  opacity: 1;
 }
