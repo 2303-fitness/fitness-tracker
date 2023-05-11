@@ -105,10 +105,10 @@ export const myRoutines = async (user, token) => {
 //GET ALL ACTIVITIES
 export async function getAllActivities() {
   try {
-    const response = await fetch(`${BASE}/routines`);
+    const response = await fetch(`${BASE}/activities`);
     const activitiesList = await response.json();
-    console.log(activitiesList.data.activities);
-    return activitiesList.data.activities;
+    console.log(activitiesList);
+    return activitiesList;
   } catch (error) {
     throw error;
   }

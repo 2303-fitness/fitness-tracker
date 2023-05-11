@@ -36,10 +36,10 @@ const Main = () => {
   useEffect(() => {
     const getInitialData = async () => {
       try {
-        const fetchedRoutines = await getAllRoutines();
-        setRoutinesList(fetchedRoutines);
-        const fetchedActivities = await getAllActivities();
-        setActivitiesList(fetchedActivities);
+        let routines= await getAllRoutines();
+        setRoutinesList(routines);
+        let activities = await getAllActivities();
+        setActivitiesList(activities);
 
         if (token) {
           setIsLoggedIn(true);
@@ -56,7 +56,7 @@ const Main = () => {
       try {
         if (token) {
           const fetchedUser = await getMe(token);
-          setCurrentUser(fetchedUser.userName);
+          setCurrentUser(fetchedUser.user);
           setUserRoutines(fetchedUser.routines);
         }
       } catch (error) {
@@ -138,8 +138,6 @@ const Main = () => {
           path="/SingleRoutineView"
           element={
             <SingleRoutineView
-              activitiesList={activitiesList}
-              setActivitiesList={setActivitiesList}
               routinesList={routinesList}
               setRoutinesList={setRoutinesList}
               selectedRoutines={selectedRoutines}

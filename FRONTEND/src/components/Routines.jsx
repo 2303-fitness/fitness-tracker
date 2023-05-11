@@ -1,4 +1,4 @@
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 import React from "react";
 import SingleRoutineView from "./SingleRoutineView";
 import { useState } from "react";
@@ -29,14 +29,14 @@ const Routines = (props) => {
 
   return (
     <>
-      {" "}
+      
       <h2> Routines</h2>
       <button
         onClick={() => {
           handleClick(isLoggedIn);
         }}
       >
-        {" "}
+        
         Create New Routine
       </button>
       {returnedRoutineList.length ? (
