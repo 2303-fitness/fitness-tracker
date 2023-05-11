@@ -3,8 +3,8 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { loginUser } from "../api";
 
 const LoginPage = ({
-  user,
-  setUser,
+  currentUser,
+  setCurrentUser,
   isLoggedIn,
   setIsLoggedIn,
   token,
@@ -16,7 +16,7 @@ const LoginPage = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const userToAuth = { user: { username: username, password: password } };
+    const userToAuth =  { username: username, password: password };
     const data = await loginUser(userToAuth);
 
     if (!data){
@@ -24,10 +24,10 @@ const LoginPage = ({
       window.alert("Invalid credentials, Username or Password is incorrect");
     }  
     else{
-      if (data.token) {
+      if (data) {
         setToken(data.token);
         
-        setCurrentUser(username);
+        setCurrentUser(data.username);
         
         localStorage.setItem("currentUser", username);
         localStorage.setItem("token", data.token);
@@ -56,17 +56,17 @@ const LoginPage = ({
                 id="UserName"
                 placeholder="UserName"
                 name="UserName"
-                required
+             
               />
               <label htmlFor="psw">
                 <strong>Password</strong>
               </label>
               <input
-                type="password"
+                type="text"
                 id="psw"
                 placeholder="Password"
                 name="psw"
-                required
+                
               />
               <button type="submit" className="btn">
                 Log in

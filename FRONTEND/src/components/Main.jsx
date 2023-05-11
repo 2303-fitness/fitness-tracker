@@ -36,7 +36,7 @@ const Main = () => {
   useEffect(() => {
     const getInitialData = async () => {
       try {
-        const fetchedRoutines = await getAllRoutines();  setRoutinesList(fetchedRoutines);
+        const fetchedRoutines = await getAllRoutines(); setRoutinesList(fetchedRoutines);
         const fetchedActivities = await getAllActivities();
         setActivitiesList(fetchedActivities);
       
@@ -92,7 +92,7 @@ const Main = () => {
           }
         />
         <Route
-          path="/loginPage"
+          path="/LoginPage"
           element={
             <LoginPage
               currentUser={currentUser}
