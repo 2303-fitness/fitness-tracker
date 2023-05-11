@@ -1,5 +1,5 @@
 // BASE
-const BASE = 'http://fitnesstrac-kr.herokuapp.com/api/'
+const BASE = 'http://fitnesstrac-kr.herokuapp.com/api'
 
 // REGISTER USER
 export const registerUser = async (userObject) => {
