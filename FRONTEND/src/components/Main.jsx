@@ -23,7 +23,7 @@ import {
 } from "./Index";
 
 const Main = () => {
-  const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState("");
   const [currentActivity, setCurrentActivity] = useState([]);
   const [currentRoutine, setCurrentRoutine] = useState({});
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -36,10 +36,11 @@ const Main = () => {
   useEffect(() => {
     const getInitialData = async () => {
       try {
-        const fetchedRoutines = await getAllRoutines(); setRoutinesList(fetchedRoutines);
+        const fetchedRoutines = await getAllRoutines();
+        setRoutinesList(fetchedRoutines);
         const fetchedActivities = await getAllActivities();
         setActivitiesList(fetchedActivities);
-      
+
         if (token) {
           setIsLoggedIn(true);
         }
@@ -55,8 +56,8 @@ const Main = () => {
       try {
         if (token) {
           const fetchedUser = await getMe(token);
-          setCurrentUser(fetchedUser.data.username);
-          setUserRoutines(fetchedUser.data.routines);
+          setCurrentUser(fetchedUser.userName);
+          setUserRoutines(fetchedUser.routines);
         }
       } catch (error) {
         console.error(error);
@@ -78,7 +79,7 @@ const Main = () => {
           path="/Home"
           element={<Home isLoggedIn={isLoggedIn} currentUser={currentUser} />}
         />
-     <Route
+        <Route
           path="/RegisterUser"
           element={
             <RegisterUser
@@ -110,6 +111,8 @@ const Main = () => {
             <Routines
               routinesList={routinesList}
               setRoutinesList={setRoutinesList}
+              selectedRoutines={selectedRoutines}
+              setSelectedRoutines={setSelectedRoutines}
               currrentUser={currentUser}
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn}
