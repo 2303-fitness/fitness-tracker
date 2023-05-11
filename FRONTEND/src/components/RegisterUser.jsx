@@ -18,7 +18,7 @@ const RegisterUser = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const userToRegister = { user: { username: username, password: password } };
+    const userToRegister = { username: username, password: password };
     const data = await registerUser(userToRegister);
     
     if (data.token) {

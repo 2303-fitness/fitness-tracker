@@ -14,22 +14,35 @@ export const registerUser = async (userObject) => {
         }
       );
   
-      const { success, error, data } = await response.json();
-  
-      if (success) {
-        const { token, message } = data;
+      const result= await response.json();
+  console.log(result)
+      if (result.user) {
+        const { token, message } = result;
         localStorage.setItem('token', token);
         return { token, message };
       }
-      if (!success && !error) {
-        const { name, message } = data;
-        return { name, message };
+      if (result.error) {
+      
+        return result;
       }
-      console.log(success, error, data);
+     return;
     } catch (error) {
       console.error(error);
     }
   };
+  /*{user: {…}, message: "you're signed up!", token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk4L…QwNX0.XBb7xz7u0XB1y8OaLXvSCq9dEx_gAnokvn5a5Yl-JaY'}
+message
+: 
+"you're signed up!"
+token
+: 
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk4LCJ1c2VybmFtZSI6InN1cGVyc3dvbGUiLCJpYXQiOjE2ODM4MTk2MDUsImV4cCI6MTY4NDQyNDQwNX0.XBb7xz7u0XB1y8OaLXvSCq9dEx_gAnokvn5a5Yl-JaY"
+user
+: 
+{id: 998, username: 'superswole'}
+[[Prototype]]
+: 
+Object */
 //LOGIN
 export const loginUser = async (userObject) => {
     try {
@@ -43,18 +56,19 @@ export const loginUser = async (userObject) => {
         }
       );
   
-      const { success, error, data } = await response.json();
-  
-      if (success) {
-        const { token, message } = data;
+      const result= await response.json();
+
+      if (result.username) {
+        const { token, message } = result;
         localStorage.setItem('token', token);
         return { token, message };
+      } console.log(result.error)
+      if (result.error) {
+      
+        return result;
       }
-      if (!success && !error) {
-        const { name, message } = data;
-        return { name, message };
-      }
-      console.log(success, error, data);
+     
+    return;
     } catch (error) {
       console.error(error);
     }
@@ -78,7 +92,22 @@ export const getMe = async (token) => {
     }
   }
 //GET ROUTINES BY USER
-
+export const myRoutines = async (user, token) =>{
+  try{
+    const response = await fetch(`${BASE}/users/${user}/routines`,{
+      method: 'GET',
+      headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  });
+  const result = await response.json();
+  console.log(result);
+  return result;
+    } catch (error){
+      console.error(error);
+    }
+  }
 //GET ALL ACTIVITIES
 export async function getAllActivities() {
     try {

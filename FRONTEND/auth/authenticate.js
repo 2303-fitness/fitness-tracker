@@ -1,5 +1,5 @@
 export function storeCurrentUser(user) {
-  localStorage.setItem('currentUser', JSON.stringify(user));
+  localStorage.setItem('currentUser', user);
 }
 
 export function storeCurrentToken(token) {
