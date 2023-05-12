@@ -6,16 +6,9 @@ import CreateRoutine from "./CreateRoutine";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Routines = (props) => {
-  const {
-    routinesList,
-    setRoutinesList,
-    isLoggedIn,
-    currentUser,
-    token,
-    selectedRoutines,
-    setSelectedRoutines,
-  } = props;
-  const [returnedRoutineList, setReturnedRoutineList] = useState([]);
+  const { routinesList, setRoutinesList, isLoggedIn, currentUser, token } =
+    props;
+
   const navigate = useNavigate();
 
   const handleClick = (logged) => {
@@ -26,29 +19,27 @@ const Routines = (props) => {
       window.alert("Please sign in to add a routine!");
     }
   };
-
+  console.log(routinesList);
   return (
     <>
-      
       <h2> Routines</h2>
       <button
         onClick={() => {
           handleClick(isLoggedIn);
         }}
       >
-        
         Create New Routine
       </button>
-      {returnedRoutineList.length ? (
+      {routinesList.length ? (
         <div id="all-routines-container">
-          {returnedRoutineList.map((routines, index) => {
+          {routinesList.map((routines, index) => {
+            console.log(routines);
             return (
               <div key={index}>
                 <SingleRoutineView
                   routines={routines}
                   isLoggedIn={isLoggedIn}
                   currentUser={currentUser}
-                  setSelectedRoutines={setSelectedRoutines}
                 />
               </div>
             );
@@ -63,7 +54,6 @@ const Routines = (props) => {
                   routines={routines}
                   isLoggedIn={isLoggedIn}
                   currentUser={currentUser}
-                  setSelectedRoutines={setSelectedRoutines}
                 />
               </div>
             );
