@@ -12,8 +12,8 @@ const Routines = (props) => {
     isLoggedIn,
     currentUser,
     token,
-    selectedRoutine,
-    setSelectedRoutine,
+    selectedRoutines,
+    setSelectedRoutines,
   } = props;
   const [returnedRoutineList, setReturnedRoutineList] = useState([]);
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const Routines = (props) => {
                   routines={routines}
                   isLoggedIn={isLoggedIn}
                   currentUser={currentUser}
-                  setSelectedRoutine={setSelectedRoutine}
+                  setSelectedRoutines={setSelectedRoutines}
                 />
               </div>
             );
@@ -63,7 +63,7 @@ const Routines = (props) => {
                   routines={routines}
                   isLoggedIn={isLoggedIn}
                   currentUser={currentUser}
-                  setSelectedRoutine={setSelectedRoutine}
+                  setSelectedRoutines={setSelectedRoutines}
                 />
               </div>
             );

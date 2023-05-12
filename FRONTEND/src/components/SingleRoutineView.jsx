@@ -11,7 +11,7 @@ const SingleRoutineView = (props) => {
     <>
     <div className="single-routine">
       <h2>{routines.name}</h2>
-      <p>Creator Name: {routines.creatorName}</p>
+      <p>Creator Name: {routines.creatorId}</p>
       <p>Goal: {routines.goal}</p>
       <p>Activities: {routines.activities}</p>
 
