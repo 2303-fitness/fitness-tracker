@@ -69,13 +69,13 @@ export const loginUser = async (userObject) => {
   }
 };
 //USER- GET ME
-export const getMe = async (token) => {
+export const getMe = async (user, token) => {
   try {
-    const response = await fetch(`${BASE}/users/me`, {
+    const response = await fetch(`${BASE}/users/${user}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
       },
     });
     const result = await response.json();
@@ -92,7 +92,7 @@ export const myRoutines = async (user, token) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
       },
     });
     const result = await response.json();
@@ -105,10 +105,10 @@ export const myRoutines = async (user, token) => {
 //GET ALL ACTIVITIES
 export async function getAllActivities() {
   try {
-    const response = await fetch(`${BASE}/routines`);
+    const response = await fetch(`${BASE}/activities`);
     const activitiesList = await response.json();
-    console.log(activitiesList.data.activities);
-    return activitiesList.data.activities;
+    console.log(activitiesList);
+    return activitiesList;
   } catch (error) {
     throw error;
   }
@@ -135,7 +135,21 @@ export const createActivity = async (newActivityObj, token) => {
 };
 
 //GET AVTIVITIES BY ROUTINE
-
+export const routineActivities = async (activityId) => {
+  try {
+    const response = await fetch(`${BASE}/activities/${activityId}/routines`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
 // GET ALL ROUTINES
 export async function getAllRoutines() {
   try {

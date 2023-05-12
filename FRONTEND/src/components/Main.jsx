@@ -24,11 +24,11 @@ import {
 
 const Main = () => {
   const [currentUser, setCurrentUser] = useState("");
-  const [currentActivity, setCurrentActivity] = useState([]);
+  const [currentActivity, setCurrentActivity] = useState({});
   const [currentRoutine, setCurrentRoutine] = useState({});
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRoutines, setUserRoutines] = useState([]);
+  const [userRoutines, setUserRoutines] = useState({});
   const [activitiesList, setActivitiesList] = useState([]);
   const [routinesList, setRoutinesList] = useState([]);
   const [selectedRoutines, setSelectedRoutines] = useState({});
@@ -36,10 +36,10 @@ const Main = () => {
   useEffect(() => {
     const getInitialData = async () => {
       try {
-        const fetchedRoutines = await getAllRoutines();
-        setRoutinesList(fetchedRoutines);
-        const fetchedActivities = await getAllActivities();
-        setActivitiesList(fetchedActivities);
+        let routines= await getAllRoutines();
+        setRoutinesList(routines);
+        let activities = await getAllActivities();
+        setActivitiesList(activities);
 
         if (token) {
           setIsLoggedIn(true);
@@ -56,8 +56,8 @@ const Main = () => {
       try {
         if (token) {
           const fetchedUser = await getMe(token);
-          setCurrentUser(fetchedUser.userName);
-          setUserRoutines(fetchedUser.routines);
+          setCurrentUser(fetchedUser.user);
+          setUserRoutines(fetchedUser.user.routines);
         }
       } catch (error) {
         console.error(error);
@@ -138,8 +138,6 @@ const Main = () => {
           path="/SingleRoutineView"
           element={
             <SingleRoutineView
-              activitiesList={activitiesList}
-              setActivitiesList={setActivitiesList}
               routinesList={routinesList}
               setRoutinesList={setRoutinesList}
               selectedRoutines={selectedRoutines}

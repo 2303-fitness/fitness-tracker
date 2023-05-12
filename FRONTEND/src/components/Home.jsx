@@ -1,4 +1,4 @@
-//import Routines from "./Routines";
+import Routines from "./Routines";
 
 
 const Home = (props) => {

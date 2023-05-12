@@ -2,47 +2,45 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const SingleRoutineView = (props) => {
-  const [isLoggedin, currentUser, routinesList, setSelectedRoutines] = props;
+  const {isLoggedin, currentUser, routines, setSelectedRoutines} = props;
   const navigate = useNavigate;
   const checkCreatorId = (currUser, creatorId) => {
     return currUser === creatorId;
-  };
+  }
   return (
+    <>
     <div className="single-routine">
-      <h2>{routine.name}</h2>
-      <p>Creator Name: {routine.creatorName}</p>
-      <p>Goal: {routine.goal}</p>
-      <p>Activities: {routine.activities}</p>
+      <h2>{routines.name}</h2>
+      <p>Creator Name: {routines.creatorId}</p>
+      <p>Goal: {routines.goal}</p>
+      <p>Activities: {routines.activities}</p>
 
-      {isLoggedin ? (
-        checkCreatorId(currentUser, routine.creatorId) ? (
+      {isLoggedin ? 
+        checkCreatorId(currentUser, routines.creatorId) ?
           <button
             onClick={() => {
-              setSelectedRoutines(routine);
+              setSelectedRoutines(routines);
               navigate("/EditRoutine");
             }}
           >
-            {" "}
+            
             Edit
           </button>
-        ) : (
+        : 
           <button
             onClick={() => {
-              setSelectedRoutines(routine);
+              setSelectedRoutines(routines);
               navigate("/CreateActivity");
             }}
           >
-            {" "}
+            
             Add Activity
           </button>
-        )
-      ) : (
-        <>
-          {" "}
-          <br></br>
-        </>
-      )}
+        
+       : <br></br>
+        }
     </div>
+    </>
   );
 };
 
