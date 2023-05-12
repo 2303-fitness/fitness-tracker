@@ -31,12 +31,11 @@ const Main = () => {
   const [userRoutines, setUserRoutines] = useState({});
   const [activitiesList, setActivitiesList] = useState([]);
   const [routinesList, setRoutinesList] = useState([]);
-  const [selectedRoutines, setSelectedRoutines] = useState({});
 
   useEffect(() => {
     const getInitialData = async () => {
       try {
-        let routines= await getAllRoutines();
+        let routines = await getAllRoutines();
         setRoutinesList(routines);
         let activities = await getAllActivities();
         setActivitiesList(activities);
@@ -111,8 +110,6 @@ const Main = () => {
             <Routines
               routinesList={routinesList}
               setRoutinesList={setRoutinesList}
-              selectedRoutines={selectedRoutines}
-              setSelectedRoutines={setSelectedRoutines}
               currrentUser={currentUser}
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn}
@@ -140,8 +137,6 @@ const Main = () => {
             <SingleRoutineView
               routinesList={routinesList}
               setRoutinesList={setRoutinesList}
-              selectedRoutines={selectedRoutines}
-              setSelectedRoutines={setSelectedRoutines}
               userRoutines={userRoutines}
               setUserRoutines={setUserRoutines}
               currentUser={currentUser}
@@ -167,8 +162,6 @@ const Main = () => {
               setCurrentRoutine={setCurrentRoutine}
               userRoutines={userRoutines}
               setUserRoutines={setUserRoutines}
-              selectedRoutines={selectedRoutines}
-              setSelectedRoutines={setSelectedRoutines}
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn}
             />
