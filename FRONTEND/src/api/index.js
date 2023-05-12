@@ -126,7 +126,7 @@ export const createActivity = async (newActivityObj, token) => {
     });
     console.log(response);
     const result = await response.json();
-    console.log("The result of addNewPost is: ", result);
+   
 
     return result;
   } catch (err) {
@@ -135,9 +135,9 @@ export const createActivity = async (newActivityObj, token) => {
 };
 
 //GET AVTIVITIES BY ROUTINE
-export const routineActivities = async (activityId) => {
+export const routineActivities = async (Id) => {
   try {
-    const response = await fetch(`${BASE}/activities/${activityId}/routines`, {
+    const response = await fetch(`${BASE}/activities/${Id}/routines`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -14,6 +14,7 @@ import {
   EditActivity,
   SearchBar,
   SingleRoutineView,
+  SingleActivityView,
   EditRoutineActivity,
   CreateRoutine,
   CreateActivity,
@@ -147,7 +148,18 @@ const Main = () => {
             />
           }
         />
-
+      <Route
+              path="/SingleActivityView"
+              element={
+                <SingleActivityView
+                  activitiesList={activitiesList}
+                  setActivitiesList={setActivitiesList}
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                  token={token}
+                />
+              }
+            />
         <Route
           path="/Profile"
           element={

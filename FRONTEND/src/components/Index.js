@@ -7,3 +7,4 @@ export { default as RegisterUser } from "./RegisterUser";
 export { default as Profile } from "./Profile";
 export { default as Home } from "./Home";
 export { default as Activities } from "./Activities";
+export { default as SingleActivityView } from "./SingleActivityView";

@@ -1,12 +1,12 @@
 // import SearchBar from "./SearchBar";
 import React from "react";
+import SingleActivityView from "./SingleActivityView";
 import { useState } from "react";
 import CreateActivity from "./CreateActivity";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Activities = (props) => {
     const {activitiesList, setActivitiesList,isLoggedIn,currentUser,token} = props;
-    const [returnedActivitiesList, setReturnedActivitiesList] = useState([]);
     const navigate = useNavigate();
 
     const handleClick = (logged) =>
@@ -28,12 +28,12 @@ const Activities = (props) => {
             {/* <SearchBar activitiesList = {activitiesList} setReturnedActivitiesList = {setReturnedActivitiesList} />
             */}
             {
-                returnedActivitiesList.length  ?
+                activitiesList.length  ?
                 <div id='all-activities-container'>
-                {returnedActivitiesList.map((activity,index) => {
+                {activitiesList.map((activity,index) => {
                     return (
                     <div key={index}>
-                        <SingleActivityView  activity = {activity} isLoggedIn = {isLoggedIn} currentUser ={currentUser} setSelectedActivity ={setSelectedActivity}/>
+                        <SingleActivityView  activity = {activity} isLoggedIn = {isLoggedIn} currentUser ={currentUser}/>
                     </div>
                     );
                     })}
@@ -43,7 +43,7 @@ const Activities = (props) => {
                 {activitiesList.map((activity,index) => {
                 return (
                 <div key={index}>
-                    <SingleActivityView  activity = {activity} isLoggedIn ={isLoggedIn} currentUser ={currentUser} setSelectedActivities ={setSelectedActivities}/>
+                    <SingleActivityView  activity = {activity} isLoggedIn ={isLoggedIn} currentUser ={currentUser} />
                 </div>
                 );
                 })}

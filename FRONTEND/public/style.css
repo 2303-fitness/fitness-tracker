@@ -43,7 +43,7 @@ body {
   padding: 20px;
   margin: 10px;
 }
-.single-routine {
+.single-routine, .single-activity {
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -57,13 +57,21 @@ body {
   font-size: 24px;
   margin-bottom: 10px;
 }
-
+.single-activity h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
 .single-routine p {
   color: #666;
   font-size: 16px;
   margin-bottom: 10px;
 }
-
+.single-activity p {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
 .single-routine button {
   background-color: #008CBA;
   border: none;
@@ -74,12 +82,26 @@ body {
   padding: 10px;
   border-radius: 5px;
 }
-
+.single-activity button {
+  background-color: #008CBA;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
 .single-routine button:hover {
   background-color: #006B9E;
 }
-
+.single-activity button:hover {
+  background-color: #006B9E;
+}
 .single-routine button:active {
+  background-color: #005A8C;
+}
+.single-activity button:active {
   background-color: #005A8C;
 }
 .headerElem {
