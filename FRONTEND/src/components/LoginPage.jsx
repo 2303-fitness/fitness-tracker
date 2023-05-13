@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { loginUser } from "../api";
+import { loginUser, callGetMe } from "../api";
 
 const LoginPage = ({
   currentUser,
@@ -16,31 +16,27 @@ const LoginPage = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const userToAuth =  { username: username, password: password };
+    const userToAuth = { username: username, password: password };
     const data = await loginUser(userToAuth);
 
-    if (!data){
-
+    if (!data) {
       window.alert("Invalid credentials, Username or Password is incorrect");
-    }  
-    else{
-      if (data) {
-        setToken(data.token);
-        
-        setCurrentUser(data.username);
-        
-        localStorage.setItem("currentUser", username);
-        localStorage.setItem("token", data.token);
-        setIsLoggedIn(true);
-        
-        setUsername('');
-        setPassword('');
-        navigate('/Home');
-      }
+    } else {
+      setToken(data.token);
+      setCurrentUser(data.username);
+      localStorage.setItem("currentUser", username);
+      localStorage.setItem("token", data.token);
+      setIsLoggedIn(true);
 
+      // Call the getMe function to fetch user data
+      const userData = await callGetMe();
+      console.log(userData); // do something with user data
+
+      setUsername("");
+      setPassword("");
+      navigate("/Home");
     }
-
-  }
+  };
   return (
     <>
       <section id="mainContainer">
@@ -56,17 +52,16 @@ const LoginPage = ({
                 id="UserName"
                 placeholder="UserName"
                 name="UserName"
-             
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
-              <label htmlFor="psw">
-                <strong>Password</strong>
-              </label>
               <input
                 type="text"
                 id="psw"
                 placeholder="Password"
                 name="psw"
-                
+                value={password} // bind the input field to the password state variable
+                onChange={(e) => setPassword(e.target.value)} // update the state when the user types
               />
               <button type="submit" className="btn">
                 Log in

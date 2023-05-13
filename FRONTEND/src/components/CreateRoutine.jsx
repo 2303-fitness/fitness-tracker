@@ -17,6 +17,7 @@ const CreateRoutine = ({
       name: routineName,
       goal: routineGoal,
       creatorId: currentUser,
+      isPublic: true,
     };
     const data = await createRoutine(newRoutine, token);
     setUserRoutines([data.routine, ...userRoutines]);

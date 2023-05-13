@@ -22,6 +22,7 @@ export const registerUser = async (userObject) => {
     if (result.error) {
       return result;
     }
+    console.log(token);
     return;
   } catch (error) {
     console.error(error);
@@ -52,17 +53,17 @@ export const loginUser = async (userObject) => {
     });
 
     const result = await response.json();
-
-    if (result.username) {
-      const { userObject, message, token } = result;
+    console.log(result);
+    if (result.user) {
+      const { token, message, userObject } = result;
       localStorage.setItem("token", token);
-      return { userObject, token, message };
+      return { token, message, userObject };
     }
-    console.log(result.error);
     if (result.error) {
       return result;
     }
-
+    const token = result.token;
+    console.log(token);
     return;
   } catch (error) {
     console.error(error);
@@ -70,6 +71,7 @@ export const loginUser = async (userObject) => {
 };
 //USER- GET ME
 export const getMe = async (token) => {
+  console.log(token);
   try {
     const response = await fetch(`${BASE}/users/me`, {
       method: "GET",
@@ -83,6 +85,16 @@ export const getMe = async (token) => {
     return result;
   } catch (err) {
     console.error(err);
+  }
+};
+// CALL GET ME
+export const callGetMe = async () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    const result = await getMe(token);
+    console.log(result);
+  } else {
+    console.log("No token found");
   }
 };
 //GET ROUTINES BY USER

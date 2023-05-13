@@ -3,7 +3,6 @@ import SingleRoutineView from "./SingleRoutineView";
 import CreateRoutine from "./CreateRoutine";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
-
 const Routines = ({ routinesList, isLoggedIn, currentUser }) => {
   const navigate = useNavigate();
   const [returnedRoutinesList, setReturnedRoutinesList] = useState([]);
@@ -22,7 +21,18 @@ const Routines = ({ routinesList, isLoggedIn, currentUser }) => {
       />
       <h2>Routines</h2>
       {isLoggedIn && <button onClick={handleClick}>Create New Routine</button>}
-      {routinesList.length ? (
+      {returnedRoutinesList.length ? (
+        <div id="all-routines-container">
+          {returnedRoutinesList.map((routine, index) => (
+            <SingleRoutineView
+              key={index}
+              routine={routine}
+              isLoggedIn={isLoggedIn}
+              currentUser={currentUser}
+            />
+          ))}
+        </div>
+      ) : (
         <div id="all-routines-container">
           {routinesList.map((routine, index) => (
             <SingleRoutineView
@@ -33,11 +43,8 @@ const Routines = ({ routinesList, isLoggedIn, currentUser }) => {
             />
           ))}
         </div>
-      ) : (
-        <p>No routines found.</p>
       )}
     </>
   );
 };
-
 export default Routines;
