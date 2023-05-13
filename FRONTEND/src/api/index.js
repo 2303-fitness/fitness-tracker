@@ -136,9 +136,8 @@ export const createActivity = async (newActivityObj, token) => {
       },
       body: JSON.stringify(newActivityObj),
     });
-    console.log(response);
     const result = await response.json();
-
+    console.log("The result of createActivity is: ", result);
     return result;
   } catch (err) {
     console.error(err);

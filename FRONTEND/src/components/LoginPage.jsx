@@ -28,9 +28,8 @@ const LoginPage = ({
       localStorage.setItem("token", data.token);
       setIsLoggedIn(true);
 
-      // Call the getMe function to fetch user data
       const userData = await callGetMe();
-      console.log(userData); // do something with user data
+      console.log(userData);
 
       setUsername("");
       setPassword("");
