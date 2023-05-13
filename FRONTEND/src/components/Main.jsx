@@ -169,6 +169,20 @@ const Main = () => {
           }
         />
         <Route
+          path="/CreateActivity"
+          element={
+            <CreateActivity
+              activitiesList={activitiesList}
+              setActivitiesList={setActivitiesList}
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              token={token}
+            />
+          }
+        />
+        <Route
           path="/SingleActivityView"
           element={
             <SingleActivityView
