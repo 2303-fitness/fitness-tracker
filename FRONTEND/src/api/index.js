@@ -15,9 +15,9 @@ export const registerUser = async (userObject) => {
     const result = await response.json();
     console.log(result);
     if (result.user) {
-      const { token, message } = result;
+      const { token, message, userObject } = result;
       localStorage.setItem("token", token);
-      return { token, message };
+      return { token, message, userObject };
     }
     if (result.error) {
       return result;
@@ -54,9 +54,9 @@ export const loginUser = async (userObject) => {
     const result = await response.json();
 
     if (result.username) {
-      const { token, message } = result;
+      const { userObject, message, token } = result;
       localStorage.setItem("token", token);
-      return { token, message };
+      return { userObject, token, message };
     }
     console.log(result.error);
     if (result.error) {
@@ -69,13 +69,13 @@ export const loginUser = async (userObject) => {
   }
 };
 //USER- GET ME
-export const getMe = async (user, token) => {
+export const getMe = async (token) => {
   try {
-    const response = await fetch(`${BASE}/users/${user}`, {
+    const response = await fetch(`${BASE}/users/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     const result = await response.json();
@@ -92,7 +92,7 @@ export const myRoutines = async (user, token) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     const result = await response.json();
@@ -126,7 +126,6 @@ export const createActivity = async (newActivityObj, token) => {
     });
     console.log(response);
     const result = await response.json();
-   
 
     return result;
   } catch (err) {
@@ -172,10 +171,8 @@ export const createRoutine = async (newRoutineObj, token) => {
       },
       body: JSON.stringify(newRoutineObj),
     });
-    console.log(response);
     const result = await response.json();
-    console.log("The result of addNewPost is: ", result);
-
+    console.log("The result of createRoutine is: ", result);
     return result;
   } catch (err) {
     console.error(err);
