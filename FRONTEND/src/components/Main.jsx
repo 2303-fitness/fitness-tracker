@@ -29,7 +29,7 @@ const Main = () => {
   const [currentRoutine, setCurrentRoutine] = useState({});
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRoutines, setUserRoutines] = useState({});
+  const [userRoutines, setUserRoutines] = useState([]);
   const [activitiesList, setActivitiesList] = useState([]);
   const [routinesList, setRoutinesList] = useState([]);
 
@@ -57,7 +57,11 @@ const Main = () => {
         if (token) {
           const fetchedUser = await getMe(token);
           setCurrentUser(fetchedUser.user);
-          setUserRoutines(fetchedUser.user.routines);
+          if (fetchedUser.user && fetchedUser.user.routines) {
+            setUserRoutines(fetchedUser.user.routines);
+          } else {
+            setUserRoutines([]);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -148,18 +152,34 @@ const Main = () => {
             />
           }
         />
-      <Route
-              path="/SingleActivityView"
-              element={
-                <SingleActivityView
-                  activitiesList={activitiesList}
-                  setActivitiesList={setActivitiesList}
-                  isLoggedIn={isLoggedIn}
-                  setIsLoggedIn={setIsLoggedIn}
-                  token={token}
-                />
-              }
+        <Route
+          path="/CreateRoutine"
+          element={
+            <CreateRoutine
+              routinesList={routinesList}
+              setRoutinesList={setRoutinesList}
+              userRoutines={userRoutines}
+              setUserRoutines={setUserRoutines}
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              token={token}
             />
+          }
+        />
+        <Route
+          path="/SingleActivityView"
+          element={
+            <SingleActivityView
+              activitiesList={activitiesList}
+              setActivitiesList={setActivitiesList}
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              token={token}
+            />
+          }
+        />
         <Route
           path="/Profile"
           element={
