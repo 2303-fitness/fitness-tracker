@@ -33,6 +33,7 @@ const Main = () => {
   const [userRoutines, setUserRoutines] = useState([]);
   const [activitiesList, setActivitiesList] = useState([]);
   const [routinesList, setRoutinesList] = useState([]);
+  const [selectedRoutine, setSelectedRoutine] = useState({});
 
   useEffect(() => {
     const getInitialData = async () => {
@@ -235,6 +236,8 @@ const Main = () => {
             <Profile
               routinesList={routinesList}
               setRoutinesList={setRoutinesList}
+              setSelectedRoutine={setSelectedRoutine}
+              selectedRoutine={selectedRoutine}
               currentUser={currentUser}
               setCurrentUser={setCurrentUser}
               currentActivity={currentActivity}

@@ -42,7 +42,7 @@ const EditRoutine = () => {
         id="name"
         type="text"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(event) => setName(event.target.value)}
       />
 
       <label htmlFor="goal">Goal:</label>
@@ -50,7 +50,7 @@ const EditRoutine = () => {
         id="goal"
         type="text"
         value={goal}
-        onChange={(e) => setGoal(e.target.value)}
+        onChange={(event) => setGoal(event.target.value)}
       />
 
       <button type="submit">Submit</button>

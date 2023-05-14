@@ -3,6 +3,7 @@ import SingleRoutineView from "./SingleRoutineView";
 import CreateRoutine from "./CreateRoutine";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
+import { AddActivity } from "./AddActivity";
 const Routines = ({ routinesList, isLoggedIn, currentUser }) => {
   const navigate = useNavigate();
   const [returnedRoutinesList, setReturnedRoutinesList] = useState([]);

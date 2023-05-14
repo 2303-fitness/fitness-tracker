@@ -44,7 +44,7 @@ const SingleRoutineView = ({
       {isLoggedIn && currentUser === routine.creatorId ? (
         <>
           <button onClick={() => setSelectedRoutine(routine)}>Edit</button>
-          <button>Delete</button>
+
           <input
             type="text"
             placeholder="Activity ID"
