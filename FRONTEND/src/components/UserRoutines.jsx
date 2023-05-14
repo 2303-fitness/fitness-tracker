@@ -1,27 +1,35 @@
 import React from "react";
-import SingleRoutineView from "./SingleRoutineView";
 import { useNavigate } from "react-router-dom";
 
-const UserRoutines = ({ routine, currentUser, creatorId, isLoggedIn }) => {
+const UserRoutines = ({ routinesList, currentUser, isLoggedIn }) => {
   const navigate = useNavigate();
+
+  console.log(routinesList);
+  console.log(currentUser);
+
+  const userCreatedRoutines = routinesList.filter(
+    (routine) => routine.creatorId === currentUser.id
+  );
+
+  console.log(userCreatedRoutines);
 
   return (
     <>
-      {currentUser === routine.creatorId.username ? (
-        <div className="single-routine">
+      {userCreatedRoutines.map((routine, index) => (
+        <div className="single-routine" key={index}>
           <h3>{routine.name}</h3>
           <p>Description: {routine.goal}</p>
           <p>Creator: {routine.creatorName}</p>
-          {isLoggedIn && currentUser === routine.creatorId.username ? (
+          {isLoggedIn && currentUser.id === routine.creatorId ? (
             <>
-              <button onClick={() => setSelectedRoutine(routine)}>Edit</button>
+              <button onClick={() => navigate(`/EditRoutine/${routine.id}`)}>
+                Edit
+              </button>
               <button>Delete</button>
             </>
-          ) : (
-            <button onClick={() => navigate("/EditRoutine")}>Edit</button>
-          )}
+          ) : null}
         </div>
-      ) : null}
+      ))}
     </>
   );
 };

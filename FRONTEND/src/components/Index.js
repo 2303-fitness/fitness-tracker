@@ -10,3 +10,5 @@ export { default as Activities } from "./Activities";
 export { default as SingleActivityView } from "./SingleActivityView";
 export { default as CreateRoutine } from "./CreateRoutine";
 export { default as CreateActivity } from "./CreateActivity";
+export { default as AddActivity } from "./AddActivity";
+export { default as EditRoutine } from "./EditRoutine";

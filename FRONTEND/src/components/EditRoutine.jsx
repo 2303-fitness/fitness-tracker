@@ -1,25 +1,61 @@
-import React from "react";
-const EditRoutine = () => { 
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getRoutineById, updateRoutine } from "../api";
 
+const EditRoutine = () => {
+  const { id } = useParams();
+  const [routine, setRoutine] = useState(null);
+  const [name, setName] = useState("");
+  const [goal, setGoal] = useState("");
 
+  useEffect(() => {
+    const fetchRoutine = async () => {
+      try {
+        const routine = await getRoutineById(id);
+        setRoutine(routine);
+        setName(routine.name);
+        setGoal(routine.goal);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-    
-    return (
-        <>
-        <h2> Edit Routine</h2>
-        
-            <form id='edit-routine-form'>
-            
-            <span><label htmlFor="name">Name</label><input type ="text" name ="name" value ="" placeholder="Name" required/></span>
-            <span><label>Goal</label><input type ="text" name ="goal" value ="" placeholder="Goal" required/></span>
-           
-            <button id ='save-routine'>SAVE</button>
-            </form>         
-       
-        
-        </>
-        
-    );
+    fetchRoutine();
+  }, [id]);
 
-}
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const updatedRoutine = await updateRoutine(id, { name, goal });
+      setRoutine(updatedRoutine);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>Edit Routine</h2>
+
+      <label htmlFor="name">Name:</label>
+      <input
+        id="name"
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <label htmlFor="goal">Goal:</label>
+      <input
+        id="goal"
+        type="text"
+        value={goal}
+        onChange={(e) => setGoal(e.target.value)}
+      />
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
 export default EditRoutine;
