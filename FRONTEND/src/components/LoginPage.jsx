@@ -18,7 +18,6 @@ const LoginPage = ({
     event.preventDefault();
     const userToAuth = { username: username, password: password };
     const data = await loginUser(userToAuth);
-
     if (!data) {
       window.alert("Invalid credentials, Username or Password is incorrect");
     } else {
