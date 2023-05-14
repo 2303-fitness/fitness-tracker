@@ -1,9 +1,18 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const SingleActivityView = ({ activity, isLoggedIn, currentUser, setSelectedActivity }) => {
-    const navigate = useNavigate;
+const SingleActivityView = ({
+  activity,
+  isLoggedIn,
+  currentUser,
+  setSelectedActivity,
+}) => {
+  const navigate = useNavigate();
+
+  if (!activity) {
+    return null;
+  }
+
   return (
     <div className="single-activity">
       <h3>{activity.name}</h3>
@@ -13,9 +22,13 @@ const SingleActivityView = ({ activity, isLoggedIn, currentUser, setSelectedActi
       {isLoggedIn && currentUser === activity.creatorId ? (
         <button onClick={() => setSelectedActivity(activity)}>Edit</button>
       ) : (
-        <button onClick={() => {
+        <button
+          onClick={() => {
             navigate("/EditRoutine");
-         }}>Edit</button>
+          }}
+        >
+          Edit
+        </button>
       )}
     </div>
   );

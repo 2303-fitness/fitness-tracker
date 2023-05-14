@@ -21,6 +21,7 @@ import {
   RegisterUser,
   Routines,
   Activities,
+  AddActivity,
 } from "./Index";
 
 const Main = () => {
@@ -56,9 +57,9 @@ const Main = () => {
       try {
         if (token) {
           const fetchedUser = await getMe(token);
-          setCurrentUser(fetchedUser.user);
-          if (fetchedUser.user && fetchedUser.user.routines) {
-            setUserRoutines(fetchedUser.user.routines);
+          setCurrentUser(fetchedUser.username);
+          if (fetchedUser.routines) {
+            setUserRoutines(fetchedUser.routines);
           } else {
             setUserRoutines([]);
           }
@@ -115,7 +116,21 @@ const Main = () => {
             <Routines
               routinesList={routinesList}
               setRoutinesList={setRoutinesList}
-              currrentUser={currentUser}
+              currentUser={currentUser}
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              token={token}
+            />
+          }
+        />
+        <Route
+          path="/EditRoutine"
+          element={
+            <EditRoutine
+              routinesList={routinesList}
+              setRoutinesList={setRoutinesList}
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn}
               token={token}
@@ -128,6 +143,24 @@ const Main = () => {
             <Activities
               activitiesList={activitiesList}
               setActivitiesList={setActivitiesList}
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              token={token}
+            />
+          }
+        />
+        <Route
+          path="/AddActivity"
+          element={
+            <AddActivity
+              routinesList={routinesList}
+              setRoutinesList={setRoutinesList}
+              activitiesList={activitiesList}
+              setActivitiesList={setActivitiesList}
+              userRoutines={userRoutines}
+              setUserRoutines={setUserRoutines}
               currentUser={currentUser}
               setCurrentUser={setCurrentUser}
               isLoggedIn={isLoggedIn}

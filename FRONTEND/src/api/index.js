@@ -55,9 +55,9 @@ export const loginUser = async (userObject) => {
     const result = await response.json();
     console.log(result);
     if (result.user) {
-      const { token, message, userObject } = result;
+      const { token, user } = result; // Update to use 'user' instead of 'userObject'
       localStorage.setItem("token", token);
-      return { token, message, userObject };
+      return { token, user }; // Return the 'user' object along with the 'token'
     }
     if (result.error) {
       return result;
@@ -89,12 +89,20 @@ export const getMe = async (token) => {
 };
 // CALL GET ME
 export const callGetMe = async () => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    const result = await getMe(token);
+  try {
+    const response = await fetch(`${BASE}/users/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const result = await response.json();
     console.log(result);
-  } else {
-    console.log("No token found");
+    return result;
+  } catch (error) {
+    console.error(error);
   }
 };
 //GET ROUTINES BY USER
@@ -171,6 +179,23 @@ export async function getAllRoutines() {
     throw error;
   }
 }
+//GET ROUTINE BY ID
+export const getRoutineById = async (id, token) => {
+  try {
+    const response = await fetch(`${BASE}/routines/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
 //CREATE ROUTINES
 export const createRoutine = async (newRoutineObj, token) => {
   try {
@@ -190,6 +215,53 @@ export const createRoutine = async (newRoutineObj, token) => {
   }
 };
 
+//EDIT ROUTINE
+export const updateRoutine = async (id, routine) => {
+  try {
+    const response = await fetch(`${BASE}/routines/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(routine),
+    });
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+//ADD ACTIVITY TO ROUTINE
+export const addActivityToRoutine = async (
+  routineId,
+  activityId,
+  count,
+  duration,
+  token
+) => {
+  try {
+    const response = await fetch(`${BASE}/routines/${routineId}/activities`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        activityId,
+        count,
+        duration,
+      }),
+    });
+
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
+};
 //DELETE ROUTINES
 export const deleteRoutine = async (id, token) => {
   try {

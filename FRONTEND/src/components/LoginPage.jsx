@@ -23,8 +23,11 @@ const LoginPage = ({
       window.alert("Invalid credentials, Username or Password is incorrect");
     } else {
       setToken(data.token);
-      setCurrentUser(data.username);
-      localStorage.setItem("currentUser", username);
+      setCurrentUser(data.userObject ? data.userObject.username : "");
+      localStorage.setItem(
+        "currentUser",
+        data.userObject ? data.userObject.username : ""
+      );
       localStorage.setItem("token", data.token);
       setIsLoggedIn(true);
 
@@ -36,6 +39,7 @@ const LoginPage = ({
       navigate("/Home");
     }
   };
+
   return (
     <>
       <section id="mainContainer">
@@ -55,12 +59,12 @@ const LoginPage = ({
                 onChange={(e) => setUsername(e.target.value)}
               />
               <input
-                type="text"
+                type="password"
                 id="psw"
                 placeholder="Password"
                 name="psw"
-                value={password} // bind the input field to the password state variable
-                onChange={(e) => setPassword(e.target.value)} // update the state when the user types
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button type="submit" className="btn">
                 Log in
