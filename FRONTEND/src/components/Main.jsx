@@ -57,7 +57,7 @@ const Main = () => {
       try {
         if (token) {
           const fetchedUser = await getMe(token);
-          setCurrentUser(fetchedUser.username);
+          setCurrentUser(fetchedUser);
           if (fetchedUser.routines) {
             setUserRoutines(fetchedUser.routines);
           } else {
@@ -82,7 +82,9 @@ const Main = () => {
       <Routes>
         <Route
           path="/Home"
-          element={<Home isLoggedIn={isLoggedIn} currentUser={currentUser} />}
+          element={
+            <Home isLoggedIn={isLoggedIn} currentUser={currentUser.username} />
+          }
         />
         <Route
           path="/RegisterUser"
